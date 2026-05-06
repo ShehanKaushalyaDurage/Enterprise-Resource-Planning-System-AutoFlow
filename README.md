@@ -52,3 +52,27 @@ The application is fully containerized for a seamless developer experience.
 * Node.js 20+ (for local frontend development if not using containerized UI)
 * Git
 
+Environment Setup:
+
+Bash
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+Spin up the Docker Containers:
+
+Bash
+docker-compose up -d --build
+Install Backend Dependencies & Setup Database:
+
+Bash
+docker-compose exec app composer install
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate --seed
+docker-compose exec app php artisan storage:link
+Access the Application:
+
+Frontend: http://localhost:5173
+
+Backend API: http://localhost:8000/api/v1
+
+Telescope (Dev): http://localhost:8000/telescope
+
