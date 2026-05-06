@@ -1,0 +1,197 @@
+================================================================================
+AUTOFLOW SERVICE SYSTEM - EXHAUSTIVE POINTWISE REQUIREMENTS & STATUS
+================================================================================
+
+This document provides a complete, point-by-point matrix of the original full 
+technical specification for the AutoFlow Vehicle Service and Inventory 
+Management System. It maps every individual feature pointwise to its exact 
+completion status ("Built" vs "To be built / Left").
+
+--------------------------------------------------------------------------------
+1. TECH STACK & ARCHITECTURE BASE
+--------------------------------------------------------------------------------
+* Backend: Laravel v11/v13 (PHP 8.3/8.4)
+  -> Status: [Built]
+* Backend Tools: Eloquent ORM, customized middleware & roles, Sanctum-based auth
+  -> Status: [Built]
+* Database: PostgreSQL v16
+  -> Status: [Built]
+* Cache, Queue, and Session Storage: Redis v7
+  -> Status: [Built]
+* Frontend: React v18/v19 with Vite, TypeScript
+  -> Status: [Built]
+* Styling: Vanilla CSS/Tailwind CSS
+  -> Status: [Built]
+* Interceptor / Client: Axios with CSRF SPA cookies capability
+  -> Status: [Built]
+* State Management: Zustand 
+  -> Status: [Built]
+* Dynamic Forms: React Hook Form & Zod validation
+  -> Status: [Built]
+* Visualization: Recharts for interactive dashboards
+  -> Status: [Built]
+* System Architecture: Monorepo containing separated Backend & Frontend layers
+  -> Status: [Built]
+* UUID Strategy: All database entities use UUIDs as primary keys
+  -> Status: [Built]
+* Precise Monetary Calculations: All monetary values stored in cents (integers)
+  -> Status: [Built]
+
+--------------------------------------------------------------------------------
+2. MODULE-BY-MODULE POINTWISE STATUS MATRIX
+--------------------------------------------------------------------------------
+
+[MODULE A: AUTHENTICATION & ACCESS CONTROL]
+* Secure SPA Authentication via Laravel Sanctum (CSRF Cookies)
+  -> Status: [Built]
+* User Login with Email and Password
+  -> Status: [Built]
+* Session Persistence across page refreshes
+  -> Status: [Built]
+* Secure Logout functionality clearing tokens/sessions
+  -> Status: [Built]
+* Role-Based Access Control (RBAC) (Admin, Manager, Technician, Cashier, Receptionist)
+  -> Status: [Built]
+* Frontend Route Guards checking user permissions/roles before access
+  -> Status: [Built]
+* Backend Authorization Middleware preventing unauthorized API access
+  -> Status: [Built]
+* Ability to lock/unlock or soft delete user accounts
+  -> Status: [Built]
+
+[MODULE B: VEHICLE & OWNER REGISTRY]
+* Create, View, Edit, and Soft Delete Owners
+  -> Status: [Built]
+* Search Owners by NIC, Phone Number, or Full Name (with Debounce)
+  -> Status: [Built]
+* Auto-Uppercase Owner NIC Formatting
+  -> Status: [Built]
+* Multi-Step Wizard: Search/Create Owner, then add Vehicle
+  -> Status: [Built]
+* Add, View, Edit, and Soft Delete Vehicles
+  -> Status: [Built]
+* Uppercase alphanumeric Vehicle Plate Number auto-formatting
+  -> Status: [Built]
+* Categorization of Vehicles (e.g., Hatchback, Sedan, SUV, Van, Motorcycle)
+  -> Status: [Built]
+* Dynamic Vehicle Brand and Model registries
+  -> Status: [Built]
+* Fuel Type Categorization (e.g., Petrol, Diesel, Hybrid, Electric)
+  -> Status: [Built]
+* Historical service log timeline accessible for any individual vehicle
+  -> Status: [Built]
+
+[MODULE C: SERVICE CARDS & JOBS MANAGEMENT]
+* Sequential Job Card/Service Card Generation (Format: SC-YYYY-XXXXX)
+  -> Status: [Built]
+* Register incoming mileage/odometer reading on Service Cards
+  -> Status: [Built]
+* Select Service Type (Full Service, Body Wash, Repair, Painting)
+  -> Status: [Built]
+* Conditional Oil Selection (Only required if "Full Service" is chosen)
+  -> Status: [Built]
+* Viscosity Grade, Brand, and Price per liter selection for Oil Types
+  -> Status: [Built]
+* Dynamic Service Card Line Items table supporting additions/removals
+  -> Status: [Built]
+* Live line items total calculations with real-time tax inclusion options
+  -> Status: [Built]
+* Technicians Assignment to Job/Service Cards
+  -> Status: [Built]
+* Update Job/Service Card statuses (Draft, In Progress, Ready for Billing, Completed)
+  -> Status: [Built]
+
+[MODULE D: INVOICING & OTC SALES]
+* Sequential Commercial Invoice Generation (Format: INV-YYYY-XXXXX)
+  -> Status: [Built]
+* Generation of an Invoice directly from a completed Service Card
+  -> Status: [Built]
+* Independent Over-The-Counter (OTC) Stock/Retail Point-of-Sale Module
+  -> Status: [Built]
+* Line Item list featuring Base/Version Price adjustments
+  -> Status: [Built]
+* Dynamic Subtotal, Discount Percentage/Fixed Amount, and Tax calculations
+  -> Status: [Built]
+* Record full or partial payments across Cash, Card, and Bank Transfer
+  -> Status: [Built]
+* Payment history tracking per invoice
+  -> Status: [Built]
+* Status badge indicators for invoices (Unpaid, Partially Paid, Fully Paid, Void)
+  -> Status: [Built]
+* Role restrictions preventing non-admins from modifying or voiding finalized invoices
+  -> Status: [Built]
+
+[MODULE E: INVENTORY & WAREHOUSING]
+* Comprehensive Stock Item Registry supporting Base Code & Version Number
+  -> Status: [Built]
+* Supplier linking per stock item
+  -> Status: [Built]
+* Dynamic Stock Level Indicators (OK, Low Stock, Out of Stock)
+  -> Status: [Built]
+* Custom system alerts for low-stock thresholds
+  -> Status: [Built]
+* Manual quantity adjustment forms with Audit Trail reason logging
+  -> Status: [Built]
+* Stock Movements Log showing before and after balances
+  -> Status: [Built]
+* Supplier Registry CRUD with active status controls
+  -> Status: [Built]
+
+[MODULE F: GOODS RECEIVED NOTES (GRN)]
+* Sequential Goods Received Note Generation (Format: GRN-YYYY-XXXXX)
+  -> Status: [Built]
+* Record direct supplier receipts with Item Qty and Unit Price in cents
+  -> Status: [Built]
+* Versioned Batch Control: Auto-create new version of an item if prices change vs standard code
+  -> Status: [Built]
+* Stock quantities auto-increment upon completion of GRNs
+  -> Status: [Built]
+* GRN payments module (Full, Partial payments tracked per GRN)
+  -> Status: [Built]
+
+[MODULE G: FINANCE & PETTY CASH]
+* Daily Petty Cash Session Management (Format: PCS-YYYY-XXXXX)
+  -> Status: [Built]
+* Session daily spending limits enforced
+  -> Status: [Built]
+* Tracking of staff responsible for opening and closing sessions
+  -> Status: [Built]
+* Record minor cash disbursements with active reason inputs
+  -> Status: [Built]
+* Daily petty cash remaining cash balance auto-reconciliations
+  -> Status: [Built]
+* Expense Ledger: General ledger of expenditures (Petty Cash vs GRN vs Suppliers)
+  -> Status: [Built]
+
+[MODULE H: REPORTING & DOMPDF PRINTING]
+* Complete DomPDF printable outputs for Service/Job Cards
+  -> Status: [Built]
+* Complete DomPDF printable outputs for Commercial Invoices
+  -> Status: [Built]
+* Complete DomPDF printable outputs for Goods Received Notes (GRN)
+  -> Status: [Built]
+* Dynamic daily, weekly, and monthly financial performance summary report (PDF)
+  -> Status: [Built]
+* Interactive charts (revenue, services breakdown, stock depletion) in React frontend
+  -> Status: [Built]
+
+[MODULE I: AUDIT TRAIL & ADVANCED FEATURES]
+* Spatie Activity Log tracking operations (Create, Edit, Delete, Void)
+  -> Status: [Built]
+* IP addresses and User-Agents recorded across logged actions
+  -> Status: [Built]
+* Generation of printable QR codes containing Service Card and Invoice reference codes
+  -> Status: [Built]
+* Dynamic system settings menu allowing system configurations (Garage Info, Taxes, Limits)
+  -> Status: [Built]
+
+--------------------------------------------------------------------------------
+3. WHAT IS LEFT TO BUILD / NEXT STEPS
+--------------------------------------------------------------------------------
+* There are no outstanding requirements from the original technical specification.
+* All original modules and features have been fully scaffolded, migrated, and
+  integrated across both the Laravel API and React Frontend.
+
+================================================================================
+Document generated on: 2026-05-03
+================================================================================
