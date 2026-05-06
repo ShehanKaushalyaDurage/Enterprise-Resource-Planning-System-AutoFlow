@@ -52,27 +52,51 @@ The application is fully containerized for a seamless developer experience.
 * Node.js 20+ (for local frontend development if not using containerized UI)
 * Git
 
-Environment Setup:
+### Environment Setup
+1. Clone the Repository
+git clone <repository-url>
+cd <project-folder>
+2. Configure Environment Variables
 
-Bash
+### Copy the example environment files:
+
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
-Spin up the Docker Containers:
-
-Bash
+Running the Application with Docker
+3. Build and Start Containers
 docker-compose up -d --build
-Install Backend Dependencies & Setup Database:
 
-Bash
+### This command will build and start all required services in detached mode.
+
+### Backend Setup
+4. Install Backend Dependencies
 docker-compose exec app composer install
+5. Generate Application Key
 docker-compose exec app php artisan key:generate
+6. Run Database Migrations and Seeders
 docker-compose exec app php artisan migrate --seed
+7. Create Storage Symlink
 docker-compose exec app php artisan storage:link
-Access the Application:
+Access the Application
+Service	URL
+Frontend	http://localhost:5173
 
-Frontend: http://localhost:5173
+### Backend API	http://localhost:8000/api/v1
 
-Backend API: http://localhost:8000/api/v1
+Laravel Telescope (Development)	http://localhost:8000/telescope
+Useful Docker Commands
+Stop Containers
+docker-compose down
+Restart Containers
+docker-compose restart
+View Logs
+docker-compose logs -f
+Rebuild Containers
+docker-compose up -d --build
 
-Telescope (Dev): http://localhost:8000/telescope
+### Notes
+Ensure Docker and Docker Compose are installed before setup.
+The backend uses Laravel with Dockerized services.
+Telescope is enabled for development and debugging purposes.
+Database seeding will populate sample data for testing.
 
